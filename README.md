@@ -14,3 +14,5 @@ There are different types of erosion, such as Water erosion, caused by rain, riv
 ####  2.1 [Average precipitation data gauges to interpolate across the mask](https://github.com/ccalvocm/Erosion_24/tree/main/data/precipitation/gauges_data).  
 ####  2.2 [Digital Elevation Model](https://www.dropbox.com/scl/fi/rmcbngua9kkyymnq78xa3/DEM_Chile90m19s.zip?rlkey=x58t1hi8nlmp710b5fn2f2dp8&st=dc0ei95i&dl=0).
 ####  2.3 [R-Factor mask for the whole country](https://www.dropbox.com/scl/fi/dnrcisgfjfpujjpmbimtj/ODEPA_FACTOR_R.zip?rlkey=qpknxgrjkj76edibn8d3violx&st=z7pe6tut&dl=0).
+
+![](https://raw.githubusercontent.com/ccalvocm/Erosion_24/main/imgs/thumbnail_pp.png)
