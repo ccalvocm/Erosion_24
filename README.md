@@ -11,5 +11,6 @@ There are different types of erosion, such as Water erosion, caused by rain, riv
 ### 1. Develop Python routines for imputing missing daily precipitation data values. All ideas are welcome from AI, ML, statistical, and others. Precipitation data, located in data folder is used for R-Factor computing. The results must have physical meaning, such as avoiding negative values. 
 
 ### 2. Code a Python package for Geostatistical interpolation (like Co-Kriging) of R-Factor raster data, subject to high resolution DEM and raster color depth values. The results must have physical meaning, such as avoiding negative values. Inputs for Co-Kriging are:
-####  2.1 Digital Elevation Model.
-####  2.2 R-Factor mask for the whole country.
+####  2.1 [Average precipitation data gauges to interpolate across the mask]([URL](https://github.com/ccalvocm/Erosion_24/tree/main/data/precipitation/gauges_data)).  
+####  2.2 Digital Elevation Model.
+####  2.3 R-Factor mask for the whole country.
