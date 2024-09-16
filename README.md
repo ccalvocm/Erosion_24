@@ -8,7 +8,7 @@ There are different types of erosion, such as Water erosion, caused by rain, riv
 
 ## The objetives of this sprint are:
 
-### 1. Develop Python routines for imputing missing daily precipitation data values. All ideas are welcome from AI, ML, Multilinear Regression, OLS, scikit-learn, and others. [Precipitation data](https://github.com/ccalvocm/Erosion_24/blob/main/data/precipitation/example_data/Pp_day_86-16_Chile.csv) is used for R-Factor computing. The results must have physical meaning, such as avoiding negative values. 
+### 1. Develop Python routines for imputing missing daily precipitation data values. All ideas are welcome from AI, ML, Multilinear Regression, OLS, and Python packages like pandas, geopandas, scikit-learn, amontg others. [Precipitation data](https://github.com/ccalvocm/Erosion_24/blob/main/data/precipitation/example_data/Pp_day_86-16_Chile.csv) is used for R-Factor computing. The results must have physical meaning, such as avoiding negative values. 
 
 ### 2. Code a Python package for Geostatistical interpolation (like Co-Kriging) of R-Factor raster data, subject to high resolution DEM and raster color depth values. The results must have physical meaning, such as avoiding negative values. Inputs for Co-Kriging are:
 ####  2.1 [Average precipitation data gauges to interpolate across the mask](https://github.com/ccalvocm/Erosion_24/tree/main/data/precipitation/gauges_data).  
