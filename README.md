@@ -16,3 +16,9 @@ There are different types of erosion, such as Water erosion, caused by rain, riv
 ####  2.3 [R-Factor mask for the whole country](https://www.dropbox.com/scl/fi/dnrcisgfjfpujjpmbimtj/ODEPA_FACTOR_R.zip?rlkey=qpknxgrjkj76edibn8d3violx&st=z7pe6tut&dl=0).
 
 ![](https://raw.githubusercontent.com/ccalvocm/Erosion_24/main/imgs/thumbnail_pp.png)
+
+## 3. [Requirements](https://github.com/ccalvocm/Erosion_24/blob/main/env/environment.yaml): 
+#### 3.1 pandas
+#### 3.2 scikit-learn
+#### 3.3 geopandas
+#### 3.4 openpyxl
