@@ -6,7 +6,6 @@ from sklearn.impute import IterativeImputer
 from itertools import cycle
 import geopandas as gpd
 import os
-import datetime
 #Funciones
 
 def mejoresCorrelaciones(df, col, Nestaciones):
