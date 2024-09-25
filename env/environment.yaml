@@ -1,0 +1,14 @@
+name: '38'
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pandas
+  - ca-certificates
+  - openssl
+  - scikit-learn
+  - ipykernel
+  - certifi
+  - geopandas
+  - openpyxl
+prefix: /Users/carlos/miniforge3/envs/38
