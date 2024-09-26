@@ -1,4 +1,4 @@
-import series_imputation as si
+import rusleData as rd
 import os
 
 def benchmark():
@@ -8,7 +8,7 @@ def benchmark():
 def main():
     data_path = os.path.join('..','data','precipitation',
 'gauges_data','est_DMC_2024-05-23.xlsx')
-    data=si.rusleData(data_path,20)
+    data=rd.rusleData(data_path,20)
     data.loadData()
     data.loadGaugesCoordinates()
     data.min_years()
