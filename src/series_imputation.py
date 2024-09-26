@@ -1,4 +1,3 @@
-#%% Dependencies
 import pandas as pd
 import numpy as np
 from sklearn.experimental import enable_iterative_imputer
@@ -6,11 +5,13 @@ from sklearn.impute import IterativeImputer
 from itertools import cycle
 import geopandas as gpd
 import os
-#Funciones
+
+#%% Dependencies
+# Functions
 
 def mejoresCorrelaciones(df, col, Nestaciones):
     ordenados = df.copy().sort_values(by=col, ascending = False)
-    # coef. correlacion pearson 0.5
+    # Pearson correlation coefficient 0.5
     ordenados = ordenados[ordenados[col] >= 0.7]
     return ordenados.index
 
@@ -24,7 +25,7 @@ def parse_digito_verificador(lista):
         list_return.append(str(rut)+'-'+str(digito_ver))
     return list_return
 
-# Función rut
+# Rut function
 def digito_verificador(rut):
     reversed_digits = map(int, reversed(str(rut)))
     factors = cycle(range(2, 8))
@@ -63,25 +64,16 @@ def min_years(df_mon,minYr):
    return estaciones_minimas
 
 def remove_duplicates(df):
-    # leer y completar estaciones duplicadas
+    # read and complete duplicate stations
     return df.drop_duplicates()
 
-def camelsCoords(camels):
-    # coordenadas de las estaciones CAMELS
-    # coordenadas camels
-    coords_camels=gpd.GeoDataFrame(camels,
-    geometry=gpd.points_from_xy(x=camels['gauge_lon'],y=camels['gauge_lat']))
-    coords_camels.set_crs(epsg='4326',inplace=True)
-    coords_camels.to_crs(epsg='32719',inplace=True)
-    return coords_camels
-
 def loadData(path):
-# leer precipitacion
+    # read precipitation
     pp=pd.read_excel(path,sheet_name='Datos',index_col=0,
                             parse_dates=True,skiprows=[1])
     return pp
     
-# leer metadata dga de Maule y Biobio (Nuble esta incluida)
+# read DGA metadata for Maule and Biobio (Nuble is included)
 def loadGaugesCoordinates(data_path):
     metadata=pd.read_excel(data_path,sheet_name='Fichas',index_col=0)
 
@@ -91,7 +83,7 @@ def loadGaugesCoordinates(data_path):
 
     metadata=metadata.set_index(metadata.columns[0],drop=True)
 
-    # gdf de metadata
+    # metadata gdf
     gdf_metadata=gpd.GeoDataFrame(metadata,
             geometry=gpd.points_from_xy(x=metadata['Longitud'],
             y=metadata['Latitud']))
@@ -104,10 +96,10 @@ def missingDataImputting():
     return None
 
 def missingData(pp_filtradas,metadata,n_multivariables,stdOutliers):
-    # meses
+    # months
     meses=range(1,13)
     
-    # df relleno
+    # filled dataframe
     q_mon_MLR=pp_filtradas.copy()
     q_mon_MLR=q_mon_MLR.astype(float)
 
@@ -120,14 +112,14 @@ def missingData(pp_filtradas,metadata,n_multivariables,stdOutliers):
             if y.count() < 1:
                 continue
             
-            # similitud hidrológica
+            # hydrological similarity
             correl=q_mon_mes.astype(float).corr()
             coord_est=metadata.loc[col].geometry
             est_near=min_dist(coord_est,metadata, -1)
             idx=q_mon_mes.columns.intersection(list(est_near.index))
             est_indep=mejoresCorrelaciones(correl.loc[list(idx)],col, -1)
 
-            # a lo más 4 estaciones para rellenar
+            # at most 4 stations for filling
             est_indep=list(est_indep[:n_multivariables])+[col]
             est_indep=list(set(est_indep))
             x=pd.DataFrame(q_mon_mes.loc[q_mon_mes.index.month==mes][est_indep].copy(),
@@ -155,61 +147,40 @@ n_multivariables=4,stdOutliers=3):
 
     Parameters
     ----------
-    root : str
-        carpeta de trabajo, ejemplo r'G:\OneDrive - ciren.cl\2022_Nuble_Embalses'
-    cuenca : str
-        cuenca o region de análisis.
-    yr_ini : str o int
-        año de inicio desde el cual se realizará el relleno y extensión de data.
-    path_q_0 : str
-        ruta de la planilla de caudales de region o cuenca al norte del área 
-        en estudio. Ejemplo join_path(root,'Datos','Caudales',
-                                'CaudalesDGA_Maule_2021_revA.xlsx')
-    path_q_region : str
-        ruta de la planilla de caudales de region o cuenca en estudio. Ejemplo
-  ruta de la planilla de caudales de region o cuenca al norte del área 
-  en estudio. Ejemplo join_path(root,'Datos','Caudales',
-                           'CaudalesDGA_Nuble_2021_revA.xlsx')
-    path_q_2 : str
-        ruta de la planilla de caudales de region o cuenca al sur del área 
-        en estudio. Ejemplo join_path(root,'Datos','Caudales',
-                                'CaudalesDGA_BioBio_2021_revA.xlsx')
-    ruta_reg : str
-        ruta del shape de la cuenca o región en estudio. Ejemplo
-        os.path.join('..','SIG','REGION_NUBLE','region_Nuble.shp')
-    path_shac : str
-        ruta de los SHACS a nivel nacional. Ejemplo 
-os.path.join('..', 'SIG', 'SHACS',
-                          'Acuiferos_SHAC_Julio_2022.shp')
+    data_path : str, optional
+        Path to the precipitation data. The default is os.path.join('..','data','precipitation',
+'gauges_data','est_DMC_2024-05-23.xlsx').
+    yr_ini : int, optional
+        Initial year. The default is 1991.
+    minYr : int, optional
+        Minimum number of years. The default is 20.
+    n_multivariables : int, optional
+        Number of multivariables. The default is 4.
+    stdOutliers : int, optional
+        Standard deviation of outliers. The default is 3.
     
-    Notas: Necesariamente debe existir una carpeta con el dataset de las cuencas 
-        CAMELS y debe ubicarse en la siguiente ruta:
-    os.path.join('..','Datos','dataset_cuencas','CAMELS_CL_v202201')      
-
-
     Returns
     -------
     None.
     
     Outputs
     -------
-    Caudales medios mensuales rellenados y extendidos.
+    Filled and extended monthly mean streamflows.
 
     """
 
-    # leer metadata dga de Maule y Biobio (Nuble esta incluida)
+    # read DGA metadata for Maule and Biobio (Nuble is included)
     metadata=loadGaugesCoordinates(data_path)
-    # leer precipitacion
+    # read precipitation
     pp=loadData(data_path)
 
-    # seleccionar estaciones con un minimo de 20 years (Quevedo, 2021)
+    # select stations with a minimum of 20 years (Quevedo, 2021)
     estaciones_min=min_years(pp,minYr)
     pp_filtradas=pp.copy()[estaciones_min.index]
 
-    # rellenar datos faltantes
+    # fill missing data
     pp_fill=missingData(pp_filtradas,metadata,n_multivariables,stdOutliers)
     print(pp_fill.head())
 
 if __name__ == '__main__':
     main()
-
