@@ -61,7 +61,7 @@ class rusleData(object):
         # TO DO
         return None
 
-    def iterImputting(self,n_multivariables=4,stdOutliers=3):
+    def missingDataImputer(self,n_multivariables=4,stdOutliers=3):
 
         def min_dist(point, gpd2, n_multivariables):
             gpd2['Dist'] = gpd2.apply(lambda row:  point.distance(row.geometry),axis=1)
@@ -90,7 +90,7 @@ class rusleData(object):
                 if y.count() < 1:
                     continue
                 
-                # hydrological similarity
+                #similarity
                 correl=q_mon_m.astype(float).corr()
                 coord_est=self.metadata.loc[col].geometry
                 est_near=min_dist(coord_est,self.metadata, -1)
@@ -121,7 +121,7 @@ class rusleData(object):
     def fillData(self):
         est_min = self.min_years()
         self.pp = self.pp.copy()[est_min.index]
-        self.pp_fill = self.iterImputting()
+        self.pp_fill = self.missingDataImputer()
         return self.pp_fill
     
 def main():

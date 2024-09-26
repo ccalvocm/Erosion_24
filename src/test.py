@@ -1,5 +1,6 @@
 import rusleData as rd
 import os
+import matplotlib.pyplot as plt
 
 def benchmark():
     # TO DO
@@ -13,7 +14,6 @@ def main():
     data.loadGaugesCoordinates()
     data.min_years()
     pp_fill = data.fillData()
-    import matplotlib.pyplot as plt
     data.pp.plot(legend=False)
     pp_fill.plot(legend=False)
 
