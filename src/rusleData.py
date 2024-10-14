@@ -57,10 +57,6 @@ class rusleData(object):
         # TO DO
         return None
 
-    def missingDataImputer():
-        # TO DO
-        return None
-
     def missingDataImputer(self,n_multivariables=4,stdOutliers=3):
 
         def min_dist(point, gpd2, n_multivariables):
